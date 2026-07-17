@@ -14,7 +14,7 @@ Enterprise stories referenced in-lab: OpenAI (7,500-node K8s), Anthropic (GKE), 
 
 1. Explore cluster — label `shop` (`team=acme`, `env=lab`)
 2. Dockerfile practices + build — tag `acme-shop:lab`
-3. Fix Dockerfile: slim / `COPY app.py` / exec `CMD`
+3. Fix Dockerfile: slim base + `COPY app.py` only
 4. Fix Dockerfile: non-root + `HEALTHCHECK`
 5. Fix Dockerfile: no baked-in secrets
 6. Deployments — scale checkout to 3

@@ -6,7 +6,6 @@ It currently:
 
 1. Uses a **fat** base (`python:3.12` instead of `slim`)
 2. Does `COPY . .` (pulls everything in the folder into the image)
-3. Uses **shell-form** `CMD` (weaker signal handling)
 
 ### Step A — measure the fat image first
 
@@ -28,13 +27,14 @@ docker build -t challenge-01:fat .
 docker images challenge-01:fat --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}'
 ```{{exec}}
 
-### Step B — fix it (slim + narrow COPY + exec CMD)
+### Step B — fix it (slim + narrow COPY)
 
 Edit `Dockerfile` so it:
 
 - Uses `python:3.12-slim`
 - Copies **only** `app.py`
-- Uses exec-form: `CMD ["python", "app.py"]`
+
+You can leave `CMD` as it is (`CMD python app.py` is fine for this challenge).
 
 Then build the fixed image:
 
@@ -48,7 +48,7 @@ docker build -t challenge-01:fixed .
 docker images 'challenge-01' --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}'
 ```{{exec}}
 
-Slim should be **noticeably smaller** than fat (often hundreds of MB less). That’s why enterprises prefer slim/distroless bases.
+Slim should be **noticeably smaller** than fat (often hundreds of MB less). That’s why teams prefer slim/distroless bases.
 
 Prove the slim image still runs:
 
@@ -70,4 +70,4 @@ Stuck? Peek at `/root/shop/Dockerfile` for patterns (after you fixed `USER` in s
 sed -n '1,40p' /root/shop/Dockerfile
 ```{{exec}}
 
-**Check:** Dockerfile uses slim + `COPY app.py` + JSON `CMD`; both `challenge-01:fat` and `:fixed` exist; slim image is smaller.
+**Check:** Dockerfile uses slim + `COPY app.py`; both `challenge-01:fat` and `:fixed` exist; slim image is smaller.
