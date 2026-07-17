@@ -15,21 +15,33 @@ Containers share the host kernel (namespaces + cgroups). Docker made packaging u
 | Pin / be deliberate about tags | `python:3.12-slim` beats floating `latest` for rebuilds |
 | Optional `HEALTHCHECK` | Useful locally; **in Kubernetes, probes still win** |
 
-Open the reference Dockerfile used for Acme Shop:
+Open the starter Dockerfile (it currently runs as **root** — you’ll fix that):
 
 ```bash
 cd /root/shop
 ```{{exec}}
 
 ```bash
-sed -n '1,80p' Dockerfile
+cat Dockerfile
 ```{{exec}}
 
 ```bash
 cat .dockerignore
 ```{{exec}}
 
-## Build and load the shop image
+### Challenge — fix non-root, then build & tag
+
+1. Edit `/root/shop/Dockerfile` so the app does **not** run as root. Add something like:
+
+```dockerfile
+RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin appuser
+RUN chown -R appuser:appuser /app
+USER appuser
+```
+
+Put `USER` **after** `COPY` / `chown`, and **before** `CMD`.
+
+2. Rebuild and load into the cluster:
 
 ```bash
 chmod +x scripts/*.sh
@@ -43,22 +55,16 @@ chmod +x scripts/*.sh
 docker images acme-shop:local
 ```{{exec}}
 
-Optional Compose peek:
-
-```bash
-docker compose config
-```{{exec}}
-
-### Challenge
-
-Tag the image for promotion-style workflows, then confirm the reference Dockerfile is non-root:
+3. Tag for promotion-style workflows:
 
 ```bash
 docker tag acme-shop:local acme-shop:lab
 ```{{exec}}
 
+4. Inspect the image and **read** the config (do not hide output). Confirm `"User": "appuser"` (or your non-root user):
+
 ```bash
-docker image inspect acme-shop:lab >/dev/null
+docker image inspect acme-shop:lab | jq '.[0].Config.User, .[0].RepoTags, .[0].Config.Env'
 ```{{exec}}
 
 ```bash
@@ -66,7 +72,13 @@ docker images 'acme-shop'
 ```{{exec}}
 
 ```bash
-grep -n '^USER' Dockerfile
+grep -nE '^(RUN useradd|USER)' Dockerfile
 ```{{exec}}
 
-**Check:** `acme-shop:local` and `acme-shop:lab` exist; Dockerfile contains `USER`.
+Optional Compose peek:
+
+```bash
+docker compose config
+```{{exec}}
+
+**Check:** Dockerfile has `USER`; images `acme-shop:local` and `acme-shop:lab` exist; image config User is not root.

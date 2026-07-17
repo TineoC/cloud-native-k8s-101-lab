@@ -1,17 +1,12 @@
 # syntax=docker/dockerfile:1
-# Reference Dockerfile — follows practices taught in this lab.
+# STARTER Dockerfile — intentionally runs as ROOT.
+# Challenge (step 2): add a non-root user and switch with USER before you ship.
 FROM python:3.12-slim
-
-# Run as non-root (same expectation as most enterprise policies / PSS)
-RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin appuser
 
 WORKDIR /app
 
 # Copy only what the app needs (smaller image, better layer cache, less attack surface)
 COPY app.py ./
-RUN chown appuser:appuser /app/app.py
-
-USER appuser
 
 ENV PORT=8080 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -25,3 +20,7 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
 
 # Exec form — no shell, correct signal handling (PID 1)
 CMD ["python", "app.py"]
+
+# TODO (you): create a non-root user, chown /app, and add:
+#   USER appuser
+# Without USER, the process runs as root (uid 0) — not enterprise-ready.

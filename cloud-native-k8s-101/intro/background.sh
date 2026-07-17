@@ -51,5 +51,11 @@ docker compose version || true
 k9s version || true
 
 # Marker so foreground / steps know prepare finished.
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "Installing jq..."
+  apt-get update -qq && apt-get install -y -qq jq >/dev/null
+fi
+
 touch /tmp/.shop-lab-ready
 echo "Shop lab environment ready (docker compose + k9s installed)."
