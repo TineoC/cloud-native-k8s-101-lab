@@ -44,7 +44,7 @@ git push
 
 Expected public URL (creator path may vary by your Killercoda username):
 
-- https://killercoda.com/tineoc/scenario/cloud-native-k8s-101-lab  
+- https://killercoda.com/tineoc/scenario/cloud-native-k8s-101  
 
 If the scenario folder slug differs, use the link shown in Creator Scenarios.
 
