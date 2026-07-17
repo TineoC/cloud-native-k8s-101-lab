@@ -24,20 +24,48 @@ cd /root/shop/challenges/02-nonroot
 cat Dockerfile
 ```{{exec}}
 
-Edit `Dockerfile`, then:
+### Solution lines to paste
+
+Replace the trailing `ENV` / `EXPOSE` / `CMD` block (or append before `CMD`) with:
+
+```dockerfile
+ENV PORT=8080 \
+    PYTHONUNBUFFERED=1
+
+RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin appuser
+RUN chown -R appuser:appuser /app
+USER appuser
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz')"
+
+CMD ["python", "app.py"]
+```
+
+Then build and confirm via the Docker API (image config), not by grepping the file:
 
 ```bash
 docker build -t challenge-02:fixed .
 ```{{exec}}
 
 ```bash
-docker run --rm challenge-02:fixed id -u
+docker image inspect challenge-02:fixed --format 'User={{.Config.User}} Healthcheck={{json .Config.Healthcheck}}'
 ```{{exec}}
-
-Expect a non-zero UID (e.g. `10001`), not `0`. Compare with the reference:
 
 ```bash
-grep -nE 'USER|HEALTHCHECK|PYTHONUNBUFFERED' /root/shop/Dockerfile
+docker image inspect challenge-02:fixed --format '{{range .Config.Env}}{{println .}}{{end}}' | grep PYTHONUNBUFFERED
 ```{{exec}}
 
-**Check:** non-root `USER`, `HEALTHCHECK`, `PYTHONUNBUFFERED`, and a successful build.
+```bash
+docker run --rm --entrypoint id challenge-02:fixed -u
+```{{exec}}
+
+Expect a non-zero UID (e.g. `10001`), not `0`. Optional: compare with the shop reference image patterns:
+
+```bash
+docker image inspect acme-shop:lab --format 'User={{.Config.User}}' 2>/dev/null || true
+```{{exec}}
+
+**Check:** image `challenge-02:fixed` has non-root `Config.User`, a `HEALTHCHECK`, `PYTHONUNBUFFERED` in `Config.Env`, and `id -u` ≠ 0.

@@ -70,4 +70,4 @@ Stuck? Peek at `/root/shop/Dockerfile` for patterns (after you fixed `USER` in s
 sed -n '1,40p' /root/shop/Dockerfile
 ```{{exec}}
 
-**Check:** Dockerfile uses slim + `COPY app.py`; both `challenge-01:fat` and `:fixed` exist; slim image is smaller.
+**Check:** both `challenge-01:fat` and `:fixed` exist; `:fixed` is smaller; image `/app` has `app.py` but not `Dockerfile` (narrow COPY).

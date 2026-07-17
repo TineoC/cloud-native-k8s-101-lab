@@ -24,18 +24,28 @@ cd /root/shop/challenges/03-no-secrets
 cat Dockerfile
 ```{{exec}}
 
-Edit `Dockerfile`, then verify it’s clean:
-
-```bash
-grep -n -i 'secret\|API_KEY' Dockerfile || echo "looks clean"
-```{{exec}}
+Edit `Dockerfile` (remove the secret `ENV`, add non-root `USER` like challenge 2), then:
 
 ```bash
 docker build -t challenge-03:fixed .
 ```{{exec}}
 
+Confirm via the Docker API / history (not by grepping the file):
+
 ```bash
-docker history challenge-03:fixed
+docker image inspect challenge-03:fixed --format '{{range .Config.Env}}{{println .}}{{end}}'
 ```{{exec}}
 
-**Check:** no secret/`API_KEY` in the Dockerfile, non-root `USER`, image builds.
+```bash
+docker history --no-trunc challenge-03:fixed | head -20
+```{{exec}}
+
+```bash
+docker image inspect challenge-03:fixed --format 'User={{.Config.User}}'
+```{{exec}}
+
+```bash
+docker run --rm --entrypoint id challenge-03:fixed -u
+```{{exec}}
+
+**Check:** no secret in image `Config.Env` / history; non-root `Config.User`; `id -u` ≠ 0.

@@ -71,14 +71,10 @@ docker image inspect acme-shop:lab | jq '.[0].Config.User, .[0].RepoTags, .[0].C
 docker images 'acme-shop'
 ```{{exec}}
 
-```bash
-grep -nE '^(RUN useradd|USER)' Dockerfile
-```{{exec}}
-
 Optional Compose peek:
 
 ```bash
 docker compose config
 ```{{exec}}
 
-**Check:** Dockerfile has `USER`; images `acme-shop:local` and `acme-shop:lab` exist; image config User is not root.
+**Check:** images `acme-shop:local` and `acme-shop:lab` exist; `docker image inspect` shows non-root `Config.User`.
