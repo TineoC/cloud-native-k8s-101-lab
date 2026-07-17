@@ -26,4 +26,6 @@ CNCF 2025: **98%** cloud native adoption · **82%** of container users run K8s i
 
 Lab files live in `/root/shop`. **Docker Compose** and **k9s** are installed on start.
 
+Every step ends with a **Challenge** — CHECK will not pass until you complete it.
+
 Click **Start** when ready.

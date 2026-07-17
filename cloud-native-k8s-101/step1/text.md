@@ -22,6 +22,16 @@ kubectl api-resources | head -30
 kubectl get ns
 ```{{exec}}
 
-You should see a ready control-plane node (Killercoda’s single-node kubeadm). Namespace `shop` may already exist from lab prepare.
+### Challenge
 
-**Check:** confirm the API answers and list namespaces.
+Label the `shop` namespace so platform tooling can find it:
+
+- `team=acme`
+- `env=lab`
+
+```bash
+kubectl label namespace shop team=acme env=lab --overwrite
+kubectl get ns shop --show-labels
+```
+
+**Check:** API is Ready, namespace `shop` exists, and both labels are set.

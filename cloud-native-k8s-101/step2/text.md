@@ -39,8 +39,16 @@ cd /root/shop
 docker compose config
 ```{{exec}}
 
-Cluster UI tip: `k9s` is pre-installed — try `k9s -n shop` after you deploy.
+### Challenge
 
-**Next:** three progressive Dockerfile **fix-it challenges** before we deploy to Kubernetes.
+Tag the image for promotion-style workflows (same digest, clearer name):
 
-**Check:** image `acme-shop:local` exists locally.
+```bash
+docker tag acme-shop:local acme-shop:lab
+docker image inspect acme-shop:lab >/dev/null
+docker images 'acme-shop'
+```
+
+Also confirm the reference Dockerfile runs **non-root** (`USER` present) — enterprise default.
+
+**Check:** `acme-shop:local` and `acme-shop:lab` exist; Dockerfile contains `USER`.

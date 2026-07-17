@@ -21,11 +21,20 @@ kubectl wait --for=condition=Ready pod -l app=checkout -n shop --timeout=90s
 kubectl get pods -n shop -l app=checkout -o wide
 ```{{exec}}
 
-Optional: run `kubectl get pods -n shop -l app=checkout -w` yourself to watch live. Then inspect probes:
+Inspect probes on the live Deployment:
 
 ```bash
-kubectl get pod -n shop -l app=checkout -o jsonpath='{range .items[*]}{.metadata.name}{" ready="}{.status.conditions[?(@.type=="Ready")].status}{"\n"}{end}'
 kubectl get deploy checkout -n shop -o yaml | grep -A6 -E 'startupProbe|readinessProbe|livenessProbe'
 ```{{exec}}
 
-**Check:** still 2 ready checkout Pods after the delete.
+### Challenge
+
+Annotate the Deployment to record that you verified probes, then trigger a **rolling restart** (common during config/image bumps):
+
+```bash
+kubectl annotate deployment/checkout -n shop lab.acme/probes=verified --overwrite
+kubectl rollout restart deployment/checkout -n shop
+kubectl rollout status deployment/checkout -n shop --timeout=120s
+```
+
+**Check:** still **3** ready Pods, and annotation `lab.acme/probes=verified` is set.

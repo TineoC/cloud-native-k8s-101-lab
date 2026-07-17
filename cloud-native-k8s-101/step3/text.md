@@ -21,12 +21,18 @@ Inspect the desired → actual relationship:
 kubectl describe deployment checkout -n shop | sed -n '1,40p'
 ```{{exec}}
 
-Optional: open a terminal UI over the cluster:
+Optional: `k9s -n shop` (quit with `:q`).
+
+### Challenge
+
+Scale checkout like a traffic spike (Kapiche-style desired state):
 
 ```bash
-k9s -n shop
+kubectl scale deployment/checkout -n shop --replicas=3
+kubectl rollout status deployment/checkout -n shop --timeout=120s
+kubectl get deploy,pods -n shop -l app=checkout
 ```
 
-(`:` then `namespace shop` if you launch without `-n`. Quit with `Ctrl+C` / `:q`.)
+Leave it at **3** replicas for the next steps.
 
-**Check:** Deployment `checkout` has 2 ready replicas in namespace `shop`.
+**Check:** Deployment `checkout` has **3** ready replicas.

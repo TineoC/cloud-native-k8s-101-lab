@@ -23,4 +23,14 @@ kubectl run curl-payments --rm -i --restart=Never --image=curlimages/curl:8.5.0 
   curl -sS http://payments.shop.svc.cluster.local/pay
 ```{{exec}}
 
-**Check:** `payments` Deployment is ready and its Service has endpoints.
+### Challenge — HA for payments
+
+Scale payments to **2** replicas and confirm Service Endpoints show both Pods:
+
+```bash
+kubectl scale deployment/payments -n shop --replicas=2
+kubectl rollout status deployment/payments -n shop --timeout=120s
+kubectl get pods,endpoints -n shop -l app=payments
+```
+
+**Check:** `payments` has **2** ready replicas and Endpoints.

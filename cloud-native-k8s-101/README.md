@@ -10,19 +10,19 @@ Enterprise stories referenced in-lab: OpenAI (7,500-node K8s), Anthropic (GKE), 
 
 **Publish steps:** see [PUBLISH.md](PUBLISH.md) (connect this repo in Killercoda Creator once).
 
-## Steps
+## Steps (each has a Challenge)
 
-1. Explore the cluster (control plane / API)
-2. Dockerfile best practices + build Acme Shop image
-3. Challenge: slim base, narrow `COPY`, exec-form `CMD`
-4. Challenge: non-root `USER` + `HEALTHCHECK`
-5. Challenge: never bake secrets into images
-6. Deployments & replicas
-7. Self-healing with probes
-8. Services & selectors
-9. ConfigMaps & Secrets
-10. Payments backend (ClusterIP DNS)
-11. Expose checkout with NodePort (Gateway API = talk reference only)
+1. Explore cluster — label `shop` (`team=acme`, `env=lab`)
+2. Dockerfile practices + build — tag `acme-shop:lab`
+3. Fix Dockerfile: slim / `COPY app.py` / exec `CMD`
+4. Fix Dockerfile: non-root + `HEALTHCHECK`
+5. Fix Dockerfile: no baked-in secrets
+6. Deployments — scale checkout to 3
+7. Probes — annotate + rolling restart
+8. Services — fix broken selector on `checkout-debug`
+9. ConfigMaps/Secrets — set lab welcome / `ENVIRONMENT=lab`
+10. Payments — scale to 2 replicas
+11. NodePort — label `owner=app-team` `expose=public`
 
 ## Layout
 
