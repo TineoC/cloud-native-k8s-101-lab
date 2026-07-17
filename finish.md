@@ -17,6 +17,7 @@ You practiced the core Cloud Native & Kubernetes 101 path:
 
 ### Keep going
 
+- Lab repo: [github.com/TineoC/cloud-native-k8s-101-lab](https://github.com/TineoC/cloud-native-k8s-101-lab)
 - Certs: KCNA → CKAD / CKA → CKS → Kubestronaut — [cncf.io/training](https://www.cncf.io/training/certification/)
 - Practice: [Killercoda](https://killercoda.com/) · [killer.sh](https://killer.sh/) · KodeKloud · Linux Foundation training
 - Community: CNCF Slack, Kubernetes Slack, KCD / KubeCon
