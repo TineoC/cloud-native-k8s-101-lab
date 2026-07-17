@@ -6,7 +6,8 @@ Coffee & Code Philly companion lab for the talk deck.
 
 You will run an **Acme Shop** microservices pattern the same way enterprises do on Kubernetes:
 
-- package with containers (Docker)
+- learn **Dockerfile best practices** and fix broken images in challenges
+- package with containers (Docker / Compose)
 - deploy with Deployments + probes
 - route with Services (and see Gateway API ownership)
 - inject ConfigMaps & Secrets without rebuilding

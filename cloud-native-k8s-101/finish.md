@@ -5,13 +5,14 @@
 You practiced the core Cloud Native & Kubernetes 101 path:
 
 1. Explored the API / control plane
-2. Built a container image
-3. Ran Deployments (replicas + ReplicaSets)
-4. Saw probe-driven self-healing
-5. Used Services + label selectors
-6. Injected ConfigMaps & Secrets (and decoded base64)
-7. Added a second service (payments) via cluster DNS
-8. Applied Gateway API with platform vs app ownership
+2. Learned Dockerfile best practices and built a solid image
+3. Fixed progressive Dockerfile challenges (layers, non-root, no secrets)
+4. Ran Deployments (replicas + ReplicaSets)
+5. Saw probe-driven self-healing
+6. Used Services + label selectors
+7. Injected ConfigMaps & Secrets (and decoded base64)
+8. Added a second service (payments) via cluster DNS
+9. Applied Gateway API with platform vs app ownership
 
 **Same ideas at enterprise scale:** OpenAI’s multi-thousand-node clusters, Anthropic on GKE, AT&T on AKS, Kapiche surviving traffic spikes — all talk to the Kubernetes API and let controllers reconcile.
 

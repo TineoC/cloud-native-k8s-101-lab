@@ -1,6 +1,6 @@
 {
   "title": "Cloud Native Kubernetes 101 — Acme Shop",
-  "description": "Hands-on companion to Cloud Native & Kubernetes 101: containers, Deployments, probes, Services, ConfigMaps/Secrets, multi-service DNS, and Gateway API — with enterprise examples (OpenAI, Anthropic, AT&T, Kapiche).",
+  "description": "Hands-on companion to Cloud Native & Kubernetes 101: Dockerfile best practices + fix-it challenges, then Deployments, probes, Services, ConfigMaps/Secrets, multi-service DNS, and Gateway API — with enterprise examples (OpenAI, Anthropic, AT&T, Kapiche).",
   "details": {
     "intro": {
       "text": "intro.md",
@@ -14,9 +14,24 @@
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Package with Docker",
+        "title": "Dockerfile best practices + build",
         "text": "step2/text.md",
         "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Challenge: layers & COPY",
+        "text": "challenge1/text.md",
+        "verify": "challenge1/verify.sh"
+      },
+      {
+        "title": "Challenge: non-root + HEALTHCHECK",
+        "text": "challenge2/text.md",
+        "verify": "challenge2/verify.sh"
+      },
+      {
+        "title": "Challenge: no secrets in images",
+        "text": "challenge3/text.md",
+        "verify": "challenge3/verify.sh"
       },
       {
         "title": "Deployments keep Pods alive",

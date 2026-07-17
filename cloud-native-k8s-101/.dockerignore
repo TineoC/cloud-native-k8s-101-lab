@@ -1,0 +1,12 @@
+# Keep build context small — never ship lab extras into the image.
+.git
+.gitignore
+__pycache__
+*.pyc
+*.md
+challenges
+manifests
+scripts
+stretch
+docker-compose.yml
+.dockerignore

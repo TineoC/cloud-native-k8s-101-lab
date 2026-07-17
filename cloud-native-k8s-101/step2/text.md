@@ -1,8 +1,27 @@
 ## Containers: the shipping unit
 
-Containers share the host kernel (namespaces + cgroups) — lighter than VMs. Docker made the packaging UX usable: each Dockerfile line is a **layer**.
+Containers share the host kernel (namespaces + cgroups). Docker made packaging usable: each Dockerfile instruction becomes a **layer**.
 
-`docker-compose.yml` in this lab shows the **laptop company stack** pattern from the talk. Compose is great for onboarding; production still needs an orchestrator (healing, rollouts, multi-host).
+### Dockerfile best practices (enterprise defaults)
+
+| Practice | Why it matters |
+|----------|----------------|
+| Prefer **slim/distroless** bases | Smaller image → faster pulls, smaller CVE surface |
+| **COPY only what you need** | Avoids leaking `.git`, keys, lab junk into layers |
+| Use a **`.dockerignore`** | Keeps build context small and safe |
+| **Non-root `USER`** | Matches Pod Security / most org policies |
+| **Exec-form `CMD`/`ENTRYPOINT`** (`["cmd","arg"]`) | Correct signals; app is PID 1 |
+| **No secrets in the image** | `ENV API_KEY=...` is forever in layer history |
+| Pin / be deliberate about tags | `python:3.12-slim` beats floating `latest` for rebuilds |
+| Optional `HEALTHCHECK` | Useful locally; **in Kubernetes, probes still win** |
+
+Open the reference Dockerfile used for Acme Shop:
+
+```bash
+cd /root/shop
+sed -n '1,80p' Dockerfile
+cat .dockerignore
+```{{exec}}
 
 ## Build and load the shop image
 
@@ -13,16 +32,15 @@ chmod +x scripts/*.sh
 docker images acme-shop:local
 ```{{exec}}
 
-Optional peek at Compose (Compose is pre-installed — great for laptop stacks; K8s still wins in prod):
+Optional Compose peek (Compose is pre-installed — laptop stacks; K8s still wins in prod):
 
 ```bash
 cd /root/shop
 docker compose config
-cat docker-compose.yml
 ```{{exec}}
 
-Cluster UI tip: `k9s` is also pre-installed — try it anytime after deploy (`:namespace shop`, then browse Pods).
+Cluster UI tip: `k9s` is pre-installed — try `k9s -n shop` after you deploy.
 
-**Enterprise note:** platforms like OpenAI/Anthropic still start from container images — then schedule thousands of them with Kubernetes.
+**Next:** three progressive Dockerfile **fix-it challenges** before we deploy to Kubernetes.
 
 **Check:** image `acme-shop:local` exists locally.
