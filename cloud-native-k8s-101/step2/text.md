@@ -19,36 +19,54 @@ Open the reference Dockerfile used for Acme Shop:
 
 ```bash
 cd /root/shop
+```{{exec}}
+
+```bash
 sed -n '1,80p' Dockerfile
+```{{exec}}
+
+```bash
 cat .dockerignore
 ```{{exec}}
 
 ## Build and load the shop image
 
 ```bash
-cd /root/shop
 chmod +x scripts/*.sh
+```{{exec}}
+
+```bash
 ./scripts/build-and-load.sh
+```{{exec}}
+
+```bash
 docker images acme-shop:local
 ```{{exec}}
 
-Optional Compose peek (Compose is pre-installed — laptop stacks; K8s still wins in prod):
+Optional Compose peek:
 
 ```bash
-cd /root/shop
 docker compose config
 ```{{exec}}
 
 ### Challenge
 
-Tag the image for promotion-style workflows (same digest, clearer name):
+Tag the image for promotion-style workflows, then confirm the reference Dockerfile is non-root:
 
 ```bash
 docker tag acme-shop:local acme-shop:lab
-docker image inspect acme-shop:lab >/dev/null
-docker images 'acme-shop'
-```
+```{{exec}}
 
-Also confirm the reference Dockerfile runs **non-root** (`USER` present) — enterprise default.
+```bash
+docker image inspect acme-shop:lab >/dev/null
+```{{exec}}
+
+```bash
+docker images 'acme-shop'
+```{{exec}}
+
+```bash
+grep -n '^USER' Dockerfile
+```{{exec}}
 
 **Check:** `acme-shop:local` and `acme-shop:lab` exist; Dockerfile contains `USER`.

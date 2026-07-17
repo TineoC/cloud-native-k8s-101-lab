@@ -16,17 +16,38 @@ Edit that Dockerfile so it:
 - Copies **only** `app.py`
 - Uses exec-form: `CMD ["python", "app.py"]`
 
-Then build to prove it works:
+Then build and prove it works (one click at a time):
 
 ```bash
 cd /root/shop/challenges/01-layers
-# edit Dockerfile with vi / nano / the IDE
-docker build -t challenge-01:fixed .
-docker run --rm -d -p 18080:8080 --name c01 challenge-01:fixed
-curl -sS http://127.0.0.1:18080/healthz
-docker rm -f c01
-```
+```{{exec}}
 
-Hints live in comments at the top of the broken Dockerfile. Peek at `/root/shop/Dockerfile` if you get stuck.
+```bash
+cat Dockerfile
+```{{exec}}
+
+Edit `Dockerfile` in the IDE (or `vi Dockerfile`), then:
+
+```bash
+docker build -t challenge-01:fixed .
+```{{exec}}
+
+```bash
+docker run --rm -d -p 18080:8080 --name c01 challenge-01:fixed
+```{{exec}}
+
+```bash
+curl -sS http://127.0.0.1:18080/healthz
+```{{exec}}
+
+```bash
+docker rm -f c01
+```{{exec}}
+
+Hints live in comments at the top of the broken Dockerfile. Peek at `/root/shop/Dockerfile` if you get stuck:
+
+```bash
+sed -n '1,40p' /root/shop/Dockerfile
+```{{exec}}
 
 **Check:** Dockerfile uses slim + `COPY app.py` + JSON `CMD` (and image builds).

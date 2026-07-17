@@ -14,10 +14,17 @@ Large AI/inference platforms rely on this so bad replicas stop taking traffic wi
 
 ```bash
 kubectl get pods -n shop -l app=checkout -o wide
-POD=$(kubectl get pods -n shop -l app=checkout -o jsonpath='{.items[0].metadata.name}')
-echo "Deleting $POD ..."
-kubectl delete pod "$POD" -n shop
+```{{exec}}
+
+```bash
+POD=$(kubectl get pods -n shop -l app=checkout -o jsonpath='{.items[0].metadata.name}') && echo "Deleting $POD ..." && kubectl delete pod "$POD" -n shop
+```{{exec}}
+
+```bash
 kubectl wait --for=condition=Ready pod -l app=checkout -n shop --timeout=90s
+```{{exec}}
+
+```bash
 kubectl get pods -n shop -l app=checkout -o wide
 ```{{exec}}
 
@@ -29,12 +36,18 @@ kubectl get deploy checkout -n shop -o yaml | grep -A6 -E 'startupProbe|readines
 
 ### Challenge
 
-Annotate the Deployment to record that you verified probes, then trigger a **rolling restart** (common during config/image bumps):
+Annotate the Deployment, then trigger a **rolling restart**:
 
 ```bash
 kubectl annotate deployment/checkout -n shop lab.acme/probes=verified --overwrite
+```{{exec}}
+
+```bash
 kubectl rollout restart deployment/checkout -n shop
+```{{exec}}
+
+```bash
 kubectl rollout status deployment/checkout -n shop --timeout=120s
-```
+```{{exec}}
 
 **Check:** still **3** ready Pods, and annotation `lab.acme/probes=verified` is set.

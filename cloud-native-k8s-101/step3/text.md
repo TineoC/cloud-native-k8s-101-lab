@@ -8,10 +8,25 @@ A **Deployment** owns desired replica count; a ReplicaSet keeps Pods alive. Dele
 
 ```bash
 cd /root/shop
+```{{exec}}
+
+```bash
 kubectl apply -f manifests/namespace.yaml
+```{{exec}}
+
+```bash
 kubectl apply -f manifests/checkout-deployment.yaml
+```{{exec}}
+
+```bash
 kubectl apply -f manifests/checkout-service.yaml
+```{{exec}}
+
+```bash
 kubectl rollout status deployment/checkout -n shop --timeout=120s
+```{{exec}}
+
+```bash
 kubectl get pods,deploy,rs -n shop -o wide
 ```{{exec}}
 
@@ -25,14 +40,18 @@ Optional: `k9s -n shop` (quit with `:q`).
 
 ### Challenge
 
-Scale checkout like a traffic spike (Kapiche-style desired state):
+Scale checkout like a traffic spike (leave it at **3** replicas):
 
 ```bash
 kubectl scale deployment/checkout -n shop --replicas=3
-kubectl rollout status deployment/checkout -n shop --timeout=120s
-kubectl get deploy,pods -n shop -l app=checkout
-```
+```{{exec}}
 
-Leave it at **3** replicas for the next steps.
+```bash
+kubectl rollout status deployment/checkout -n shop --timeout=120s
+```{{exec}}
+
+```bash
+kubectl get deploy,pods -n shop -l app=checkout
+```{{exec}}
 
 **Check:** Deployment `checkout` has **3** ready replicas.

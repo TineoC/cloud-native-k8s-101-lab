@@ -14,16 +14,26 @@ Service types from the talk:
 
 ```bash
 kubectl get svc checkout -n shop -o wide
-kubectl get endpoints checkout -n shop
-kubectl run curl-checkout --rm -i --restart=Never --image=curlimages/curl:8.5.0 -n shop -- \
-  curl -sS http://checkout.shop.svc.cluster.local/checkout
 ```{{exec}}
 
-Optional port-forward:
+```bash
+kubectl get endpoints checkout -n shop
+```{{exec}}
+
+```bash
+kubectl run curl-checkout --rm -i --restart=Never --image=curlimages/curl:8.5.0 -n shop -- curl -sS http://checkout.shop.svc.cluster.local/checkout
+```{{exec}}
+
+Optional port-forward (leave running in one terminal):
 
 ```bash
 kubectl port-forward svc/checkout 8080:80 -n shop
-# other terminal: curl -sS http://127.0.0.1:8080/checkout
+```
+
+Then in another terminal:
+
+```bash
+curl -sS http://127.0.0.1:8080/checkout
 ```
 
 ### Challenge — fix a broken selector
@@ -32,16 +42,24 @@ A common outage: Service exists, but **selector doesn’t match** Pod labels →
 
 ```bash
 kubectl apply -f /root/shop/manifests/challenges/broken-checkout-debug-svc.yaml
-kubectl get endpoints checkout-debug -n shop
-# expect no addresses
-```
-
-Fix the Service selector to `app: checkout` (edit YAML or `kubectl edit svc/checkout-debug -n shop`), then re-apply / save.
+```{{exec}}
 
 ```bash
 kubectl get endpoints checkout-debug -n shop
-kubectl run curl-debug --rm -i --restart=Never --image=curlimages/curl:8.5.0 -n shop -- \
-  curl -sS http://checkout-debug.shop.svc.cluster.local/checkout
-```
+```{{exec}}
+
+Expect **no** addresses. Fix the Service selector to `app: checkout` (IDE / `kubectl edit svc/checkout-debug -n shop`), then:
+
+```bash
+kubectl get svc checkout-debug -n shop -o yaml | grep -A2 selector
+```{{exec}}
+
+```bash
+kubectl get endpoints checkout-debug -n shop
+```{{exec}}
+
+```bash
+kubectl run curl-debug --rm -i --restart=Never --image=curlimages/curl:8.5.0 -n shop -- curl -sS http://checkout-debug.shop.svc.cluster.local/checkout
+```{{exec}}
 
 **Check:** `checkout` and `checkout-debug` both have Endpoints.
