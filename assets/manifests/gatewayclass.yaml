@@ -1,0 +1,11 @@
+# Placeholder GatewayClass — in enterprises the platform team installs the
+# controller (Envoy Gateway, Contour, Istio, cloud LB) that implements this class.
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: webapp-gw
+  labels:
+    owner: platform-team
+spec:
+  # No controller is running in this lab — objects still teach the ownership model.
+  controllerName: killercoda.example.com/lab-placeholder

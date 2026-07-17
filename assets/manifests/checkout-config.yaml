@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: checkout-config
+  namespace: shop
+data:
+  WELCOME_MESSAGE: "Acme Shop — Coffee & Code Philly"
+  ENVIRONMENT: "staging"
+  PAYMENTS_URL: "http://payments.shop.svc.cluster.local"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: checkout-secret
+  namespace: shop
+type: Opaque
+stringData:
+  # Demo only. In production: external secret stores + etcd encryption + tight RBAC.
+  API_KEY: "acme-shop-demo-key-not-for-prod"

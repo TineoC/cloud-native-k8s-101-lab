@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: cloud-native-101
+data:
+  WELCOME_MESSAGE: "Welcome to Cloud Native Kubernetes 101"

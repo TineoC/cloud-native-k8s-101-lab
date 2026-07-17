@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-native-101
+  namespace: cloud-native-101
+spec:
+  selector:
+    app: cloud-native-101
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

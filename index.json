@@ -1,0 +1,65 @@
+{
+  "title": "Cloud Native Kubernetes 101 — Acme Shop",
+  "description": "Hands-on companion to Cloud Native & Kubernetes 101: containers, Deployments, probes, Services, ConfigMaps/Secrets, multi-service DNS, and Gateway API — with enterprise examples (OpenAI, Anthropic, AT&T, Kapiche).",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "intro/background.sh",
+      "foreground": "intro/foreground.sh"
+    },
+    "steps": [
+      {
+        "title": "Explore the cluster (enterprise context)",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Package with Docker",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Deployments keep Pods alive",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
+      },
+      {
+        "title": "Self-healing with probes",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
+      },
+      {
+        "title": "Services: stable networking",
+        "text": "step5/text.md",
+        "verify": "step5/verify.sh"
+      },
+      {
+        "title": "ConfigMaps and Secrets",
+        "text": "step6/text.md",
+        "verify": "step6/verify.sh"
+      },
+      {
+        "title": "Multi-service shop (payments)",
+        "text": "step7/text.md",
+        "verify": "step7/verify.sh"
+      },
+      {
+        "title": "Gateway API ownership",
+        "text": "step8/text.md",
+        "verify": "step8/verify.sh"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "**/*", "target": "/root/shop" },
+        { "file": "scripts/*.sh", "target": "/root/shop", "chmod": "+x" }
+      ]
+    }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}

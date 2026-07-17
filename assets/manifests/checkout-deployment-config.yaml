@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: shop
+  labels:
+    app: checkout
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: checkout
+  template:
+    metadata:
+      labels:
+        app: checkout
+        tier: frontend
+    spec:
+      containers:
+        - name: checkout
+          image: acme-shop:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: SERVICE_NAME
+              value: checkout
+            - name: PORT
+              value: "8080"
+            - name: WELCOME_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: checkout-config
+                  key: WELCOME_MESSAGE
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: checkout-config
+                  key: ENVIRONMENT
+            - name: PAYMENTS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: checkout-config
+                  key: PAYMENTS_URL
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: checkout-secret
+                  key: API_KEY
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            failureThreshold: 10
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            initialDelaySeconds: 5
