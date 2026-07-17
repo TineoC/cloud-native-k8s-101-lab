@@ -9,7 +9,7 @@ You will run an **Acme Shop** microservices pattern the same way enterprises do 
 - learn **Dockerfile best practices** and fix broken images in challenges
 - package with containers (Docker / Compose)
 - deploy with Deployments + probes
-- route with Services (and see Gateway API ownership)
+- route with Services and expose via **NodePort** (Gateway API is talk-only here)
 - inject ConfigMaps & Secrets without rebuilding
 
 **Enterprise context (from the talk):**

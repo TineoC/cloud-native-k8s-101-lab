@@ -1,4 +1,7 @@
-# Gateway API — role-oriented ingress (platform owns Gateway; app owns HTTPRoute).
+# REFERENCE ONLY (talk sample) — do not apply on Killercoda.
+# This cluster has no Gateway API CRDs / controller. Lab traffic uses NodePort
+# (see checkout-nodeport.yaml). Gateway API — role-oriented ingress
+# (platform owns Gateway; app owns HTTPRoute).
 # Same model as the deck's shop.example.com/checkout sample.
 # CRDs required; a controller (Contour/Envoy Gateway/etc.) is needed for live traffic.
 apiVersion: gateway.networking.k8s.io/v1

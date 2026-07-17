@@ -1,35 +1,36 @@
-## Gateway API: platform door, app routes
+## Expose checkout with NodePort
 
-Classic Ingress mixed responsibilities. **Gateway API** splits ownership (talk sample: `shop.example.com/checkout`):
+Killercoda’s kubeadm image does **not** ship Gateway API CRDs or an ingress controller. In this lab we expose the shop the simple way: a **NodePort** Service.
 
-| Role | Objects |
-|------|---------|
-| **Platform** | `GatewayClass`, `Gateway` (entry, TLS, controller) |
-| **App** | `HTTPRoute` → Service → Pods |
+Service types (from the talk):
 
-This lab installs official CRDs and applies the objects. No ingress controller is running here, so the Gateway will not get a public address — you still practice the **enterprise ownership model** used with Envoy Gateway / Contour / cloud LBs.
+| Type | This lab |
+|------|----------|
+| **ClusterIP** | Internal only — `checkout` + `payments` stay here |
+| **NodePort** | Open a high port (30000–32767) on the node — what we use now |
+| **LoadBalancer** | Needs a cloud LB / MetalLB (not available here) |
 
-## Install CRDs and apply shop ingress objects
+### Talk context (no install required)
+
+In production, teams often move from NodePort → cloud LB → **Gateway API** (`GatewayClass` / `Gateway` / `HTTPRoute`) with platform vs app ownership. Manifests under `manifests/gateway*.yaml` are **reference only** for that talk sample — do not apply them here.
+
+## Apply NodePort and hit the app
 
 ```bash
 cd /root/shop
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
-kubectl wait --for=condition=Established crd/gatewayclasses.gateway.networking.k8s.io --timeout=120s
-kubectl apply -f manifests/gatewayclass.yaml
-kubectl apply -f manifests/gateway-api.yaml
-kubectl get gatewayclass
-kubectl get gateway,httproute -n shop
+kubectl apply -f manifests/checkout-nodeport.yaml
+kubectl get svc -n shop -o wide
 ```{{exec}}
 
-Read the ownership labels:
+Reach it via the node IP + port `30080`:
 
 ```bash
-kubectl get gateway shop-gateway -n shop -o yaml | grep -A2 'owner:'
-kubectl get httproute checkout-route -n shop -o yaml | grep -A6 'matches:'
+NODE_IP=$(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
+echo "NodePort URL: http://${NODE_IP}:30080/checkout"
+curl -sS "http://${NODE_IP}:30080/checkout"
+curl -sS "http://${NODE_IP}:30080/healthz"
 ```{{exec}}
 
-Path mental model:
+On Killercoda you can also open traffic to the node port from the UI: {{TRAFFIC_HOST1_30080}}
 
-`shop.example.com/checkout` → Gateway → HTTPRoute → Service `checkout` → Pods
-
-**Check:** `GatewayClass/webapp-gw`, `Gateway/shop-gateway`, and `HTTPRoute/checkout-route` exist.
+**Check:** Service `checkout-external` is `NodePort` with port **30080** and answers on `/healthz`.

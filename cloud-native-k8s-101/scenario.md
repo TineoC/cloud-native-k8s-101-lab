@@ -15,6 +15,6 @@ Practice containers and core Kubernetes objects with a checkout + payments layou
 5. Service DNS + port-forward
 6. ConfigMap + Secret injection (base64 demo)
 7. Payments Deployment/Service
-8. Gateway API CRDs + Gateway/HTTPRoute ownership
+8. NodePort exposure (`checkout-external:30080`); Gateway API manifests are talk reference only
 
 Working directory on Killercoda: `/root/shop` (from `assets/`).

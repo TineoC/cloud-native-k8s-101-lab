@@ -12,7 +12,7 @@ You practiced the core Cloud Native & Kubernetes 101 path:
 6. Used Services + label selectors
 7. Injected ConfigMaps & Secrets (and decoded base64)
 8. Added a second service (payments) via cluster DNS
-9. Applied Gateway API with platform vs app ownership
+9. Exposed checkout with a **NodePort** Service (Gateway API left as talk reference)
 
 **Same ideas at enterprise scale:** OpenAI’s multi-thousand-node clusters, Anthropic on GKE, AT&T on AKS, Kapiche surviving traffic spikes — all talk to the Kubernetes API and let controllers reconcile.
 

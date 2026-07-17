@@ -20,4 +20,4 @@ From the lab root (`killercoda/cloud-native-k8s-101/`):
 kubectl apply -k stretch/manifests/overlays/local
 ```
 
-The main Killercoda scenario already covers Gateway API in step 8 (`assets/manifests/gateway-*.yaml`). Stretch adds SBOM/signing and Kustomize overlays — not verified by Killercoda CHECK buttons.
+The main Killercoda scenario exposes traffic with **NodePort** (step 8). Gateway API YAML under `assets/manifests/gateway*.yaml` is talk reference only — Killercoda clusters do not ship those CRDs. Stretch adds SBOM/signing and Kustomize overlays — not verified by Killercoda CHECK buttons.

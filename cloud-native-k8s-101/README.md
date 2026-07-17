@@ -2,7 +2,7 @@
 
 Hands-on companion for **Coffee & Code Philly** — covers the talk deck with an enterprise-style shop:
 
-containers → Deployments/probes → Services → ConfigMaps/Secrets → multi-service DNS → Gateway API ownership.
+containers → Deployments/probes → Services → ConfigMaps/Secrets → multi-service DNS → NodePort exposure.
 
 Enterprise stories referenced in-lab: OpenAI (7,500-node K8s), Anthropic (GKE), NVIDIA (GPU DRA), Kapiche (GKE spikes), AT&T (AKS).
 
@@ -22,7 +22,7 @@ Enterprise stories referenced in-lab: OpenAI (7,500-node K8s), Anthropic (GKE), 
 8. Services & selectors
 9. ConfigMaps & Secrets
 10. Payments backend (ClusterIP DNS)
-11. Gateway API platform vs app ownership
+11. Expose checkout with NodePort (Gateway API = talk reference only)
 
 ## Layout
 

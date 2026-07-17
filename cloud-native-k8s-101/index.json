@@ -1,6 +1,6 @@
 {
   "title": "Cloud Native Kubernetes 101 — Acme Shop",
-  "description": "Hands-on companion to Cloud Native & Kubernetes 101: Dockerfile best practices + fix-it challenges, then Deployments, probes, Services, ConfigMaps/Secrets, multi-service DNS, and Gateway API — with enterprise examples (OpenAI, Anthropic, AT&T, Kapiche).",
+  "description": "Hands-on companion to Cloud Native & Kubernetes 101: Dockerfile best practices + fix-it challenges, then Deployments, probes, Services, ConfigMaps/Secrets, multi-service DNS, and NodePort exposure — with enterprise examples (OpenAI, Anthropic, AT&T, Kapiche).",
   "details": {
     "intro": {
       "text": "intro.md",
@@ -59,7 +59,7 @@
         "verify": "step7/verify.sh"
       },
       {
-        "title": "Gateway API ownership",
+        "title": "Expose with NodePort",
         "text": "step8/text.md",
         "verify": "step8/verify.sh"
       }
