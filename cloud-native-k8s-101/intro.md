@@ -23,4 +23,6 @@ You will run an **Acme Shop** microservices pattern the same way enterprises do 
 
 CNCF 2025: **98%** cloud native adoption · **82%** of container users run K8s in prod.
 
-Lab files live in `/root/shop`. Click **Start** when ready.
+Lab files live in `/root/shop`. **Docker Compose** and **k9s** are installed on start.
+
+Click **Start** when ready.

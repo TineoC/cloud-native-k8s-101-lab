@@ -21,4 +21,12 @@ Inspect the desired → actual relationship:
 kubectl describe deployment checkout -n shop | sed -n '1,40p'
 ```{{exec}}
 
+Optional: open a terminal UI over the cluster:
+
+```bash
+k9s -n shop
+```
+
+(`:` then `namespace shop` if you launch without `-n`. Quit with `Ctrl+C` / `:q`.)
+
 **Check:** Deployment `checkout` has 2 ready replicas in namespace `shop`.

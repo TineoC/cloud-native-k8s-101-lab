@@ -13,11 +13,15 @@ chmod +x scripts/*.sh
 docker images acme-shop:local
 ```{{exec}}
 
-Optional peek at Compose (do not need it running for later steps):
+Optional peek at Compose (Compose is pre-installed — great for laptop stacks; K8s still wins in prod):
 
 ```bash
-cat /root/shop/docker-compose.yml
+cd /root/shop
+docker compose config
+cat docker-compose.yml
 ```{{exec}}
+
+Cluster UI tip: `k9s` is also pre-installed — try it anytime after deploy (`:namespace shop`, then browse Pods).
 
 **Enterprise note:** platforms like OpenAI/Anthropic still start from container images — then schedule thousands of them with Kubernetes.
 
