@@ -6,6 +6,10 @@ containers → Deployments/probes → Services → ConfigMaps/Secrets → multi-
 
 Enterprise stories referenced in-lab: OpenAI (7,500-node K8s), Anthropic (GKE), NVIDIA (GPU DRA), Kapiche (GKE spikes), AT&T (AKS).
 
+**GitHub:** https://github.com/TineoC/cloud-native-k8s-101-lab  
+
+**Publish steps:** see [PUBLISH.md](PUBLISH.md) (connect this repo in Killercoda Creator once).
+
 ## Steps
 
 1. Explore the cluster (control plane / API)
@@ -25,6 +29,8 @@ Enterprise stories referenced in-lab: OpenAI (7,500-node K8s), Anthropic (GKE), 
 | `step*/` | Step markdown + `verify.sh` |
 | `assets/` | Files uploaded into the Killercoda VM at `/root/shop` |
 | `stretch/` | Optional advanced track (local / early finishers) |
+| `PUBLISH.md` | One-time Killercoda Creator + GitHub wiring |
+| `scripts/apply-killercoda-github-access.sh` | Apply deploy key / webhook via `gh` |
 
 ## Local run (kind / minikube / Killercoda)
 
@@ -37,13 +43,7 @@ kubectl apply -f manifests/checkout-deployment.yaml
 kubectl apply -f manifests/checkout-service.yaml
 ```
 
-## Publish to Killercoda
-
-1. Put this scenario at the **root** of a GitHub repo (or a dedicated scenario folder Killercoda can discover).
-2. Creator → add repo + branch → deploy key + webhook.
-3. Push; open the public scenario URL.
-
-Validate locally:
+## Validate
 
 ```bash
 pip install killercoda-cli
