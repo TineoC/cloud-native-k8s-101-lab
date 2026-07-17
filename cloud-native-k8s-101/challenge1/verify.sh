@@ -4,14 +4,19 @@ set -euo pipefail
 DF=/root/shop/challenges/01-layers/Dockerfile
 [[ -f "$DF" ]] || { echo "Missing $DF"; exit 1; }
 
-grep -Eiq 'FROM[[:space:]]+python:3\.12-slim' "$DF" \
+# Ignore comment lines so instructional text cannot false-fail checks.
+code="$(grep -v '^[[:space:]]*#' "$DF" || true)"
+
+echo "${code}" | grep -Eiq 'FROM[[:space:]]+python:3\.12-slim' \
   || { echo "Use FROM python:3.12-slim"; exit 1; }
 
-grep -Eq 'COPY[[:space:]]+\.[[:space:]]+\.' "$DF" \
-  && { echo "Remove COPY . . — copy only app.py"; exit 1; }
+if echo "${code}" | grep -Eq 'COPY[[:space:]]+\.[[:space:]]+\.'; then
+  echo "Remove COPY . . — copy only app.py"
+  exit 1
+fi
 
-grep -Eq 'COPY[[:space:]]+(\./)?app\.py' "$DF" \
-  || { echo "Need COPY app.py (or ./app.py)"; exit 1; }
+echo "${code}" | grep -Eq 'COPY[[:space:]]+(\./)?app\.py([[:space:]]|$)' \
+  || { echo "Need COPY app.py (e.g. COPY app.py ./ or COPY app.py .)"; exit 1; }
 
 docker image inspect challenge-01:fat >/dev/null 2>&1 \
   || { echo "Build the fat image first: docker build -t challenge-01:fat . (before editing)"; exit 1; }
