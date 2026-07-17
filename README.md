@@ -2,10 +2,9 @@
 
 Hands-on companion for **Coffee & Code Philly**.
 
-- **Scenario folder:** [`cloud-native-k8s-101/`](cloud-native-k8s-101/) (Killercoda discovers this)
-- **Publish:** [PUBLISH.md](PUBLISH.md)
-- **Repo:** https://github.com/TineoC/cloud-native-k8s-101-lab
+- **Live lab:** https://killercoda.com/tineoc/scenario/cloud-native-k8s-101
+- **Scenario folder:** [`cloud-native-k8s-101/`](cloud-native-k8s-101/)
+- **Publish notes:** [PUBLISH.md](PUBLISH.md)
+- **GitHub:** https://github.com/TineoC/cloud-native-k8s-101-lab
 
-Expected Killercoda URL after sync:
-
-`https://killercoda.com/<your-username>/scenario/cloud-native-k8s-101`
+`killercoda-cli validate` from `cloud-native-k8s-101/` before pushing.
